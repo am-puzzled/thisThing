@@ -1,0 +1,13 @@
+.breakdown-panel {
+  width: 100%;
+  min-height: 520px;
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 0;
+
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+  overflow: hidden;
+  margin-top: 2rem;
+}

@@ -1,0 +1,43 @@
+.diagram-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: 100%;
+}
+
+.message-bubble {
+  background: #dcf8c6;
+
+  color: #111;
+
+  padding: 14px 18px;
+
+  border-radius: 18px;
+
+  max-width: 260px;
+
+  word-break: break-word;
+
+  position: relative;
+
+  font-size: 1rem;
+
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+.message-bubble::after {
+  content: "";
+
+  position: absolute;
+
+  right: -8px;
+  bottom: 0;
+
+  width: 0;
+  height: 0;
+
+  border-left: 10px solid #dcf8c6;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+}
