@@ -23,7 +23,7 @@
   color: #666;
 }
 
-/* Holds the two cards */
+/* Holds the cards */
 .card-container {
   display: flex;
   gap: 30px;
