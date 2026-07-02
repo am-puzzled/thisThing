@@ -10,7 +10,7 @@ function ScramledMessage({scrambledMessage, bubbleColor}){
                   className="scrambled-message-bubble"
                   style={{ backgroundColor: bubbleColor }}
                 >
-                    <p>{scrambledMessage || "Kj9!aL7m$Qx2#pZ8v@Rt3%wB6n"}</p> 
+                    <p>{scrambledMessage || "Kj9!"}</p> 
                 </div>
              </div>
         </>

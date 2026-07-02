@@ -4,9 +4,9 @@
 }
 
 .right-breakdown-panel h2 {
-  font-size: 1.8rem;
+  font-size: clamp(1.3rem, 4vw, 1.8rem);;
   color: #111827;
-  margin-bottom: 0.75rem;
+  margin-bottom: clamp(0.5rem, 2vw, 0.75rem);;
 }
 
 .right-breakdown-panel p {
@@ -16,8 +16,10 @@
 }
 
 .diagram-box {
-  margin-top: 2rem;
-  min-height: 280px;
+  margin-top: clamp(1rem, 3vw, 2rem);
+  min-height: clamp(180px, 40vh, 280px);
+
+  padding: clamp(1rem, 4vw, 2rem);
 
   display: flex;
   align-items: center;
@@ -28,19 +30,22 @@
 
   color: #9ca3af;
   background: #f9fafb;
+  
 }
+
+/* use case 2 css */
 .encryption-flow {
   width: 100%;
   height: 100%;
 
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
   gap: 1.2rem;
 }
 
 .flow-icon {
-  font-size: 1.4rem;
+  font-size: clamp(1.1rem, 3.5vw, 1.4rem);
   flex-shrink: 0;
 }
 
@@ -58,10 +63,13 @@
 }
 
 .lock-box-icon {
-  width: 70px;
-  height: 70px;
+  width: clamp(48px, 15cqi, 70px);;
 
-  padding: 1rem;
+  /* FORCE it to remain a perfect circle or square without stretching */
+  aspect-ratio: 1 / 1;
+  height: auto;
+
+  padding: clamp(0.6rem, 2vw, 1rem);;
 
   color: #22c55e;
   background: #111827;
@@ -75,11 +83,14 @@
 }
 
     .lock-box-icon-decrypt {
-        width: 70px;
-        height: 70px;
+        width: clamp(48px, 15cqi, 70px);;
 
-        padding: 1rem;
+        /* FORCE it to remain a perfect circle or square without stretching */
+        aspect-ratio: 1 / 1;
+        height: auto;
 
+        padding: clamp(0.6rem, 2vw, 1rem);;
+        
         color: #2dd5de;
         background: #111827;
 
@@ -180,4 +191,325 @@
   100% {
     transform: scale(1);
   }
+}
+
+
+/* use case 3 css */
+.seal-step-flow {
+  width: 100%;
+  min-height: 260px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.seal-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.seal-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.seal-plus-icon {
+  font-size: clamp(1.1rem, 3.5vw, 1.5rem);
+  color: #6b7280;
+}
+
+.digital-seal-box {
+  flex: 0 1 auto;
+  width: auto;
+  height: min(100%, clamp(30px, 16cqi, 66px));
+  aspect-ratio: 1 / 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: clamp(10px, 3cqi, 16px);
+  border: 2px solid #22c55e;
+
+  background: rgba(34, 197, 94, 0.12);
+  box-shadow: 0 8px 20px rgba(34, 197, 94, 0.18);
+}
+
+.digital-seal-icon {
+  font-size: clamp(0.5rem, 6cqi, 3rem);
+  color: #22c55e;
+  
+  /* ADD THIS: Ensures the SVG icon itself scales cleanly inside the flex box boundaries */
+  width: 70%;
+  height: 70%;
+  max-width: 48px;
+  max-height: 48px;
+}
+
+.seal-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  padding: 0.75rem 1.5rem;
+
+  border: none;
+  border-radius: 12px;
+
+  background: #2563eb;
+  color: white;
+
+  font-weight: 700;
+  cursor: pointer;
+
+  box-shadow: 0 8px 22px rgba(37, 99, 235, 0.3);
+}
+
+.seal-button:hover {
+  transform: translateY(-2px);
+}
+
+.seal-button-icon {
+  font-size: 1.2rem;
+}
+
+
+
+
+
+
+/* use case 4 css */
+.build-packet-flow {
+  width: 100%;
+  min-height: 300px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.3rem;
+}
+
+.packet-item,
+.packet-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.packet-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.packet-plus-icon,
+.packet-arrow-icon {
+  font-size: clamp(1.1rem, 3.5vw, 1.5rem);
+  color: #6b7280;
+  flex-shrink: 0;
+}
+
+.packet-card-inner {
+  /* CHANGE THIS: Remove 170px. Let it fill the available space up to its max desktop width */
+  width: 100%;
+  max-width: 170px; 
+  
+  /* CHANGE THIS: Switch from static rem padding to a fluid percentage or clamp */
+  padding: clamp(0.5rem, 3cqi, 1rem);
+
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  /* ADD THIS: If the box shrinks to 80px, allow the icon and text to wrap vertically instead of breaking */
+  flex-wrap: wrap; 
+  justify-content: center;
+
+  border-radius: 14px;
+  border: 2px solid #2563eb;
+  background: rgba(37, 99, 235, 0.08);
+}
+
+.metadata-card .packet-card-inner {
+  border-color: #22c55e;
+  background: rgba(34, 197, 94, 0.1);
+}
+
+.packet-card-icon {
+  font-size: 2rem;
+}
+
+.user-icon {
+  color: #2563eb;
+}
+
+.clock-icon {
+  color: #22c55e;
+}
+
+.packet-card h4,
+.packet-card p {
+  margin: 0;
+}
+
+.packet-card span {
+  font-size: 0.8rem;
+  color: #475569;
+}
+
+.build-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  padding: 0.75rem 1.6rem;
+
+  border: none;
+  border-radius: 12px;
+
+  background: #2563eb;
+  color: white;
+
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.ready-packet-stack {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.packet-row {
+  /* CHANGE THIS: Ensure the row fills the glass width but never forces it wider */
+  width: 100%;
+  box-sizing: border-box; /* Crucial so padding doesn't blow up the 100% width calculation */
+  
+  /* CHANGE THIS: Make padding slightly smaller on micro screens */
+  padding: clamp(0.4rem, 2cqi, 0.65rem) clamp(0.5rem, 3cqi, 0.8rem);
+
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  border-radius: 10px;
+  
+  /* CHANGE THIS: Fluid small font that won't clip on a 375px window */
+  font-size: clamp(0.65rem, 2.5cqi, 0.75rem);
+  
+  /* ADD THIS: Hide anything that absolutely fails to fit on an 80px container */
+  overflow: hidden; 
+}
+
+/* ADD THIS: Targeted rule for the text strings inside the rows */
+.packet-row span {
+  white-space: nowrap;      /* Prevents text from wrapping into ugly multi-line breaks */
+  overflow: hidden;         /* Hides the overflowing letters */
+  text-overflow: ellipsis;  /* Adds an automatic "..." at the end if it gets squeezed too tight */
+  width: 100%;
+}
+
+/* The color variations remain perfectly fine since they don't impact sizing */
+.purple-row {
+  background: rgba(168, 85, 247, 0.18);
+  border: 1px solid rgba(168, 85, 247, 0.6);
+}
+
+.blue-row {
+  background: rgba(37, 99, 235, 0.15);
+  border: 1px solid rgba(37, 99, 235, 0.5);
+}
+
+.green-row {
+  background: rgba(34, 197, 94, 0.15);
+  border: 1px solid rgba(34, 197, 94, 0.5);
+}
+
+
+/* sending packet */
+.send-packet-step {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+.send-packet-flow {
+  width: 100%;
+  min-height: 320px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.network-node {
+  width: 260px;
+  height: 220px;
+
+  border: 2px solid #dbeafe;
+  border-radius: 18px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+
+  background: #f8fafc;
+}
+
+.mini-ready-packet {
+  width: 190px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+
+  padding: 0.7rem;
+
+  border: 1px solid #93c5fd;
+  border-radius: 12px;
+
+  background: rgba(219, 234, 254, 0.6);
+}
+
+.mini-packet-row {
+  padding: 0.45rem 0.55rem;
+
+  border-radius: 8px;
+
+  font-size: 0.7rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.send-packet-button {
+  padding: 0.8rem 1.8rem;
+
+  border: none;
+  border-radius: 12px;
+
+  background: #2563eb;
+  color: white;
+
+  font-weight: 700;
+  cursor: pointer;
+
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
+}
+
+.send-packet-button:hover {
+  transform: translateY(-2px);
 }

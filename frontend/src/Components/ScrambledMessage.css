@@ -1,20 +1,25 @@
-
 .scrambled-message-bubble {
   background: rgb(238, 150, 42);
-
   color: #111;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: clamp(6px, 3cqi, 18px);
 
-  padding: 14px 18px;
-
-  border-radius: 18px;
-
+  /* CHANGE THIS: Let flexbox handle its sizing dynamically instead of a hard width clamp */
+  flex: 1 1 auto;
   max-width: 260px;
+  max-height:50px; /* Lowered height floor so it fits the micro box height */
+  box-sizing: border-box;
 
-  word-break: break-word;
+  padding: clamp(0rem, 0.5cqi, 1rem);
 
+  font-size: clamp(0.3rem, 1.5cqi, 1rem);
   position: relative;
-
-  font-size: 1rem;
-
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+  white-space: nowrap;       
+  overflow: hidden;          
+  text-overflow: ellipsis;   
 }

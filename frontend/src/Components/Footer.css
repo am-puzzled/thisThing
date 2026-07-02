@@ -1,25 +1,36 @@
 .footer{
-    margin-top:3rem;
+    margin-top: clamp(1.5rem, 5vw, 3rem);
 
-    padding:2rem;
+    padding: clamp(1.5rem, 4vw, 2rem) clamp(1rem, 3vw, 2rem);
 
     background:white;
     border-top:1px solid #e5e7eb;
 
     text-align:center;
+
+    /* ADD THIS: Layout protection rules */
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .footer-links{
     display:flex;
     justify-content:center;
-    gap:1.5rem;
+    gap: clamp(0.75rem, 3vw, 1.5rem);
 
-    margin-bottom:1rem;
+    margin-bottom: clamp(0.75rem, 2vw, 1rem);
+  
+    /* ADD THIS: Allow columns to wrap cleanly if user has a mountain of footer links */
+    flex-wrap: wrap;
 }
 
 .footer-links a{
     text-decoration:none;
     color:#333;
+
+    /* CHANGE THIS: Scaled link text size for readability on high-density phone glass */
+    font-size: clamp(0.85rem, 2.5vw, 1rem);
+    white-space: nowrap;
 }
 
 .footer-links a:hover{
@@ -28,5 +39,5 @@
 
 .footer p{
     color:#666;
-    font-size:0.9rem;
+    font-size: clamp(0.75rem, 2vw, 0.9rem);
 }

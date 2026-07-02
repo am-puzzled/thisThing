@@ -4,25 +4,33 @@
     justify-content:space-between;
     align-items:center;
 
-    padding:1rem 2rem;
+    padding:1rem clamp(0.75rem, 4vw, 2rem);
 
     background:white;
     border-bottom:1px solid #e5e7eb;
+
+    /* ADD THIS: Essential backup to keep the header aligned perfectly within its layout bounds */
+    box-sizing: border-box; 
+    width: 100%;
 }
 
 .logo{
-    font-size:1.2rem;
+    font-size: clamp(1.05rem, 3vw, 1.2rem);;
     font-weight:700;
+    flex-shrink: 0; /* Banish the browser from crushing the logo name */
 }
 
 .header nav{
     display:flex;
-    gap:1.5rem;
+    gap: clamp(0.6rem, 3vw, 1.5rem);;
 }
 
 .header a{
     text-decoration:none;
     color:#333;
+
+    font-size: clamp(0.85rem, 2.5vw, 1rem);
+    white-space: nowrap; /* Prevents an individual link item from breaking into two lines */
 }
 
 .header a:hover{

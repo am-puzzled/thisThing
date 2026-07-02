@@ -1,3 +1,4 @@
+import './topicsPage.css';
 
 import {useState, useEffect} from 'react';
 

@@ -8,10 +8,16 @@ import { MdNoEncryptionGmailerrorred } from "react-icons/md";
 import { FaArrowRight } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa";
 import { IoShieldCheckmarkOutline } from "react-icons/io5";
+import { CiLock } from "react-icons/ci";
+import { FaRegClock } from "react-icons/fa";
+import { IoMdContact } from "react-icons/io";
 
 //jsx files
 import TypedMessage from './TypedMessage.jsx';
 import ScramledMessage from '../Components/ScrambledMessage.jsx';
+import GlassPackage from "./GlassPackage";
+import GlassPackage_Taller from "./GlassPackage_Taller.jsx";
+
 
 
 function Right_BreakDownPanel({ steps, activeStep, savedMessage }) {
@@ -27,21 +33,35 @@ function Right_BreakDownPanel({ steps, activeStep, savedMessage }) {
   // for encryption
   const [selectedKey, setSelectedKey] = useState("");
   const [isEncrypting, setIsEncrypting] = useState(false);
+  const [isEncrypted, setIsEncrypted] = useState(false);
   const [needsEncryptClick, setNeedsEncryptClick] = useState(false); // you need a state, hence the encryption button will always be breathing
 
   //for decryption
   const [isDecrypting, setIsDecrypting] = useState(false);
+  const [isDecrypted, setIsDecrypted] = useState(false);
   const [needsDecryptClick, setNeedsDecryptClick] = useState(false);
 
   const [scrambledMessage, setScrambledMessage] = useState("");
   const [encryptedColor, setEncryptedColor] = useState("#ea9fea");
 
+  //for sealing
+  const [isSealed, setIsSealed] = useState(false);
+
+  //for building the packet
+  const [isBuilt, setIsBuilt] = useState(false);
+
+  //for sending the packet
+  const [packetPosition, setPacketPosition] = useState("sender");
+
+
+ //Functions
+  //1.for encryption 
   function handleEncrypt() {
     setIsEncrypting(true);
 
     setTimeout(() => {
       setScrambledMessage(
-        `${selectedKey}#${Math.random().toString(36).slice(2, 14)}@X9!`
+        `${selectedKey}#${Math.random().toString(36).slice(2, 3)}`
       );
 
       //you want the colour of the scrambled message to change only after loading
@@ -49,18 +69,46 @@ function Right_BreakDownPanel({ steps, activeStep, savedMessage }) {
 
       setIsEncrypting(false);
       setNeedsEncryptClick(false);
+      setIsEncrypted(true);
     }, 2000);
   }
 
+  //2.for Decryption
    function handleDecrypt() {
       setIsDecrypting(true);
 
       setTimeout(() => {
         setIsDecrypting(false);
         setNeedsDecryptClick(false);
+        setIsDecrypted(true);
+
       }, 2000);
    }
 
+   //3.for sealing
+    function handleSeal() {
+      setIsSealed(true);
+    }
+
+   //4.for building
+    function handleBuild() {
+      setIsBuilt(true);
+    }
+
+    //5. for sending
+    function handleSendPacket() {
+      setPacketPosition("sender");
+
+      setTimeout(() => {
+        setPacketPosition("server");
+      }, 1500);
+
+      setTimeout(() => {
+        setPacketPosition("receiver");
+      }, 2500);
+    }
+
+  //6. For controlling the animation panel
    //You need to switch what is displayed for each and every step on the diagram box
   function renderAnimationStage() {
     switch (activeStep) {
@@ -69,6 +117,7 @@ function Right_BreakDownPanel({ steps, activeStep, savedMessage }) {
               < TypedMessage  savedMessage = {savedMessage} />
           );
 
+        // Encryption
         case 2:
           return (
               <>
@@ -99,7 +148,7 @@ function Right_BreakDownPanel({ steps, activeStep, savedMessage }) {
                             </button>
                           ))}
                         </div>
-                    </div>
+                      </div>
 
                     <FaArrowRight className="flow-icon arrow-icon" />
 
@@ -127,26 +176,217 @@ function Right_BreakDownPanel({ steps, activeStep, savedMessage }) {
                     
                     <FaArrowRight className="flow-icon arrow-icon" />
 
-                    <ScramledMessage scrambledMessage={scrambledMessage}  bubbleColor={encryptedColor}/>
+                    {/* Don't show anything until message has been encrypted */}
+                    {isEncrypted && (
+                      <ScramledMessage scrambledMessage={scrambledMessage}  bubbleColor={encryptedColor}/>
+                    )}
+
                   </div>              
               </>
           );
 
+        // sesling the message
         case 3:
-         return (
-          <>
-               <ScramledMessage scrambledMessage={scrambledMessage}  bubbleColor={encryptedColor}/>
-               <FaPlus className="flow-icon plus-icon" />
-               <IoShieldCheckmarkOutline />
+          return (
+            <div className="seal-step-flow">
+              <div className="seal-item">
+                <p className="seal-label">Encrypted Message</p>
+                <ScramledMessage
+                  scrambledMessage={scrambledMessage}
+                  bubbleColor={encryptedColor}
+                />
+              </div>
 
-          </>
-         );
+              <FaPlus className="seal-plus-icon" />
+
+              <div className="seal-item">
+                <p className="seal-label">Digital Seal</p>
+                <div className="digital-seal-box">
+                  <IoShieldCheckmarkOutline className="digital-seal-icon" />
+                </div>
+              </div>
+
+              <button className="seal-button" onClick={handleSeal}>
+                <CiLock className="seal-button-icon" />
+                <span>Seal</span>
+              </button>
+
+              {/* Nothing should appear unless the user clicks seal button */}
+              {isSealed && (
+                <div className="sealed-package">
+                  <p className="seal-label">Sealed Package</p>
+
+                 <GlassPackage>
+                    <ScramledMessage
+                      scrambledMessage={scrambledMessage}
+                      bubbleColor={encryptedColor}
+                    />
+
+                    <div className="digital-seal-box">
+                      <IoShieldCheckmarkOutline className="digital-seal-icon" />
+                    </div>
+
+                    <CiLock className="package-lock-icon" />
+                  </GlassPackage>
+                </div>
+              )}
+            </div>
+          );
 
         case 4:
-        return <p>Build packet animation will appear here.</p>;
+          return (
+            <div className="build-packet-flow">
+              <div className="packet-item">
+                <p className="packet-label">Sealed Package</p>
+
+                <GlassPackage>
+                  <ScramledMessage
+                    scrambledMessage={scrambledMessage}
+                    bubbleColor={encryptedColor}
+                  />
+
+                  <div className="digital-seal-box">
+                    <IoShieldCheckmarkOutline className="digital-seal-icon" />
+                  </div>
+
+                  <CiLock className="package-lock-icon" />
+                </GlassPackage>
+              </div>
+
+              <FaPlus className="packet-plus-icon" />
+
+              <div className="packet-card recipient-card">
+                <p className="packet-label">Recipient Info</p>
+
+                <div className="packet-card-inner">
+                  <IoMdContact className="packet-card-icon user-icon" />
+
+                  <div>
+                    <h4>Alice</h4>
+                    <p>Public Key:</p>
+                    <span>A1B2...9Z8Y</span>
+                  </div>
+                </div>
+              </div>
+
+              <FaPlus className="packet-plus-icon" />
+
+              <div className="packet-card metadata-card">
+                <p className="packet-label">Metadata</p>
+
+                <div className="packet-card-inner">
+                  <FaRegClock className="packet-card-icon clock-icon" />
+
+                  <div>
+                    <p>Time: 2025-05-14</p>
+                    <p>10:30:00</p>
+                    <span>Alg: RSA-OAEP + SHA-256</span>
+                  </div>
+                </div>
+              </div>
+
+              <button className="build-button" onClick={handleBuild}>
+                <CiLock className="seal-button-icon" />
+                <span>Build</span>
+              </button>
+
+              <FaArrowRight className="packet-arrow-icon" />
+
+              {/* Nothing should appear unless the user clicks build button */}
+              {isBuilt && (
+
+                  <div className="packet-item">
+                    <p className="packet-label">Ready Packet</p>
+
+                    <GlassPackage_Taller>
+                      <div className="ready-packet-stack">
+                        {/* <div className="packet-row purple-row"> */}
+                           <GlassPackage>
+                               <ScramledMessage 
+                                 scrambledMessage={scrambledMessage}
+                                 bubbleColor={encryptedColor}
+                               />
+
+                               <div className="digital-seal-box">
+                                <IoShieldCheckmarkOutline className="digital-seal-icon" />
+                               </div>
+                            </GlassPackage>
+                        {/* </div> */}
+
+                        <div className="packet-row blue-row">
+                          <IoMdContact />
+                          <span>Alice — Public Key: A1B2...9Z8Y</span>
+                        </div>
+
+                        <div className="packet-row green-row">
+                          <FaRegClock />
+                          <span>Time: 2025-05-14 10:30:00</span>
+                        </div>
+                      </div>
+                    </GlassPackage_Taller>
+                  </div>
+              )} 
+            </div>
+          );
 
         case 5:
-        return <p>Send packet animation will appear here.</p>;
+          return (
+              <div className="send-packet-step">
+                <div className="send-packet-flow">
+                  <div className="network-node sender-node">
+                    {packetPosition === "sender" && <IoMdContact />}
+
+                      <h4>Sender</h4>
+
+                     
+                         <GlassPackage_Taller>
+                            <div className="ready-packet-stack">
+                              {/* <div className="packet-row purple-row"> */}
+                                <GlassPackage>
+                                    <ScramledMessage
+                                      scrambledMessage={scrambledMessage}
+                                      bubbleColor={encryptedColor}
+                                    />
+
+                                    <div className="package-seal small">
+                                      <IoShieldCheckmarkOutline className="package-seal-icon" />
+                                    </div>
+
+                                    <CiLock className="package-lock-icon" />
+                                  </GlassPackage>
+                              {/* </div> */}
+
+                              <div className="packet-row blue-row">
+                                <IoMdContact />
+                                <span>Alice — Public Key: A1B2...9Z8Y</span>
+                              </div>
+
+                              <div className="packet-row green-row">
+                                <FaRegClock />
+                                <span>Time: 2025-05-14 10:30:00</span>
+                              </div>
+                            </div>
+                          </GlassPackage_Taller>
+                      </div>
+                 
+
+                  <div className="network-node server-node">
+                    {packetPosition === "server" && <IoMdContact />}
+                     <h4>WhatsApp Servers</h4>
+                  </div>
+
+                  <div className="network-node receiver-node">
+                    {packetPosition === "receiver" && <IoMdContact />}
+                       <h4>Receiver</h4>
+                  </div>
+                </div>
+
+                {/* send button */}
+                <button className="send-packet-button" onClick={handleSendPacket}>
+                  Send Packet
+                </button>
+              </div>
+          );
 
         case 6:
           return (
@@ -205,8 +445,11 @@ function Right_BreakDownPanel({ steps, activeStep, savedMessage }) {
 
                   <FaArrowRight className="flow-icon arrow-icon" />
 
-                  <TypedMessage savedMessage={savedMessage} />
-                  
+                  {/* Don't show anything until message has been decrypted */}
+                  {isDecrypted && (
+                     <TypedMessage savedMessage={savedMessage} />
+                  )}
+  
                 </div>              
             </>
         );

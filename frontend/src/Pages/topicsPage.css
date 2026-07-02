@@ -1,0 +1,6 @@
+/* 1. Global Reset to trap elements inside their designated widths */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
